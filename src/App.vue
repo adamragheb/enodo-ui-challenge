@@ -1,43 +1,47 @@
 <template>
   <div id="app">
-    <NavBar :userInitials="userInitials" :menuItems="menuItems"/>
-    <SecondNavBar :property="property"/>
-    <PropertySummary :property="property"/>
-    <HistoricalOperatingExpenses :headers="opexHeaders" :items="opexItems"/>
-    <GPRCard/>
-    <OperatingExpensesCard/>
+    <Header />
+    <NavBar :userInitials="userInitials" :menuItems="menuItems" />
+    <SecondNavBar :property="property" />
+    <div class="body-content">
+      <PropertySummary :property="property" />
+      <HistoricalOperatingExpenses :headers="opexHeaders" :items="opexItems" />
+      <GPRCard />
+      <OperatingExpensesCard />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from './components/HelloWorld.vue'
-import NavBar from './components/NavBar.vue'
-import SecondNavBar from './components/SecondNavBar.vue'
-import PropertySummary from './components/PropertySummary.vue'
-import HistoricalOperatingExpenses from './components/HistoricalOperatingExpenses.vue'
-import GPRCard from './components/GPRCard.vue'
-import OperatingExpensesCard from './components/OperatingExpensesCard.vue'
+import { Component, Vue } from 'vue-property-decorator';
+import HelloWorld from './components/HelloWorld.vue';
+import Header from './components/header.vue';
+import NavBar from './components/NavBar.vue';
+import SecondNavBar from './components/SecondNavBar.vue';
+import PropertySummary from './components/PropertySummary.vue';
+import HistoricalOperatingExpenses from './components/HistoricalOperatingExpenses.vue';
+import GPRCard from './components/GPRCard.vue';
+import OperatingExpensesCard from './components/OperatingExpensesCard.vue';
 @Component({
   components: {
     HelloWorld,
+    Header,
     NavBar,
     PropertySummary,
     HistoricalOperatingExpenses,
     SecondNavBar,
     GPRCard,
     OperatingExpensesCard
-  },
+  }
 })
 export default class App extends Vue {
-
-  private userInitials: string = 'AP'
+  private userInitials: string = 'AP';
   private menuItems: object[] = [
     { name: 'Property Analysis', active: true },
     { name: 'Rent Roll Analyzer', active: false },
     { name: 'Operating Statement Parser', active: false },
     { name: 'Markert Analysis', active: false }
-  ]
+  ];
 
   private property: object = {
     name: 'West Loop Luxury',
@@ -46,9 +50,9 @@ export default class App extends Vue {
     numberUnits: '--',
     propetyType: '--',
     avm: 7403292
-  }
+  };
 
-  private opexHeaders = ['T12', 'T9', 'T6']
+  private opexHeaders = ['T12', 'T9', 'T6'];
   private opexItems = [
     {
       name: 'Gross Potential Rent (GPR)',
@@ -162,20 +166,37 @@ export default class App extends Vue {
     },
     {
       name: 'EGI',
-      values: [-13173,  -1823,  -65318],
+      values: [-13173, -1823, -65318],
       isTotal: true
     }
-  ]
+  ];
 }
 </script>
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  $blue-gray: #2c3e50;
+  $white: #ffffff;
+
+  background-color: lighten($blue-gray, 75%);
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: $blue-gray;
+  // margin-top: 60px;
+  .prop-title {
+    font-weight: 700;
+  }
+  .body-content {
+    padding: 1rem 5rem;
+    display: flex;
+    flex-flow: row wrap;
+    height: 600px;
+    & > div {
+      border: 1px solid lighten($blue-gray, 35%);
+      background-color: $white;
+    }
+  }
 }
 </style>

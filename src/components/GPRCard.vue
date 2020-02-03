@@ -1,14 +1,14 @@
 <template>
-  <div>
-    Gross Potential Rent
+  <div class="prop-gross">
+    <div class="prop-gross_title">Gross Potential Rent</div>
     <canvas v-show="gprChart" :id="grossPotentialRentID"></canvas>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import ChartPie from './ChartPie.vue'
-import Chart from 'chart.js'
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import ChartPie from './ChartPie.vue';
+import Chart from 'chart.js';
 
 @Component({
   components: {
@@ -16,13 +16,14 @@ import Chart from 'chart.js'
   }
 })
 export default class NavBar extends Vue {
-
-  private loaded = false
-  private id = Math.random().toString(36).substring(7)
-  private gprChart: Chart | null = null
+  private loaded = false;
+  private id = Math.random()
+    .toString(36)
+    .substring(7);
+  private gprChart: Chart | null = null;
 
   get grossPotentialRentID() {
-    return `gross-potential-rent-${this.id}`
+    return `gross-potential-rent-${this.id}`;
   }
 
   private chartData = {
@@ -47,24 +48,26 @@ export default class NavBar extends Vue {
       'Administrative',
       'Utilities'
     ]
-  }
+  };
   private chartOptions: object = {
     responsive: true,
     maintainAspectRatio: false
-  }
+  };
 
   private createChart(chartId: string, chartData: any): Chart {
-    const ctx: HTMLCanvasElement = document.getElementById(chartId) as HTMLCanvasElement
+    const ctx: HTMLCanvasElement = document.getElementById(
+      chartId
+    ) as HTMLCanvasElement;
     return new Chart(ctx, {
       type: chartData.type,
       data: chartData.data,
-      options: chartData.options,
-    })
+      options: chartData.options
+    });
   }
 
   private mounted() {
     setTimeout(() => {
-      this.loaded = true
+      this.loaded = true;
       const data = {
         type: 'bar',
         data: {
@@ -83,12 +86,14 @@ export default class NavBar extends Vue {
                 1649718,
                 1656558,
                 1659918,
-                1643396],
+                1643396
+              ],
               backgroundColor: '#F9E79F'
             },
             {
               label: 'Less Vacancy Loss',
-              data: [14551,
+              data: [
+                14551,
                 21936,
                 22973,
                 23239,
@@ -152,7 +157,8 @@ export default class NavBar extends Vue {
             '9/1/2019',
             '10/1/2019',
             '11/1/2019',
-            '12/1/2019']
+            '12/1/2019'
+          ]
         },
         options: {
           responsive: true,
@@ -187,13 +193,32 @@ export default class NavBar extends Vue {
             }
           }
         }
-      }
-      this.gprChart = this.createChart(this.grossPotentialRentID, data)
-    }, 500)
+      };
+      this.gprChart = this.createChart(this.grossPotentialRentID, data);
+    }, 500);
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+$blue-gray: #2c3e50;
+.prop-gross {
+  border-radius: 0.25rem;
+  order: 2;
+  height: fit-content;
+  flex-basis: calc(40% - 2rem);
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  .prop-gross_title {
+    text-align: left;
+    padding: 1rem;
+    font-weight: 700;
+  }
+  canvas {
+    height: 321px !important;
+    padding: 1rem;
+    border-top: 1px solid $blue-gray;
+  }
+}
 </style>
